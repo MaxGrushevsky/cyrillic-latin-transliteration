@@ -24,13 +24,6 @@ fromRoman('MMXXIV')   // 2024
 - **`toRoman(num: number): string`** — Converts a number (1–3999) to a Roman numeral. Throws on invalid input (zero, negative, &gt; 3999, or non-integer).
 - **`fromRoman(romanStr: string): number`** — Converts a Roman numeral string to a number. Case-insensitive; invalid strings throw.
 
-## Publishing (for package maintainers)
-
-```bash
-npm run build
-npm publish
-```
-
 ## License
 
 MIT
