@@ -1,0 +1,8 @@
+node_modules/
+src/
+*.ts
+!*.d.ts
+tsconfig.json
+.git/
+.gitignore
+*.tsbuildinfo

@@ -1,0 +1,41 @@
+{
+  "name": "roman-numerals",
+  "version": "1.0.0",
+  "description": "Convert between numbers and Roman numerals (1-3999). Zero dependencies.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "roman",
+    "numerals",
+    "converter",
+    "number",
+    "roman-numerals"
+  ],
+  "author": "MaxGrushevsky",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MaxGrushevsky/roman-numerals.git"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
