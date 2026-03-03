@@ -1,104 +1,80 @@
 /**
- * Convert between numbers and Roman numerals (1–3999).
+ * Transliterate between Cyrillic and Latin scripts.
  * Zero dependencies.
  */
 
-interface RomanNumeral {
-  value: number
-  numeral: string
+const CYRILLIC_TO_LATIN: Record<string, string> = {
+  'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
+  'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
+  'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+  'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch',
+  'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+  'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo',
+  'Ж': 'Zh', 'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M',
+  'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U',
+  'Ф': 'F', 'Х': 'H', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sch',
+  'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
 }
 
-const ROMAN_NUMERALS: RomanNumeral[] = [
-  { value: 1000, numeral: 'M' },
-  { value: 900, numeral: 'CM' },
-  { value: 500, numeral: 'D' },
-  { value: 400, numeral: 'CD' },
-  { value: 100, numeral: 'C' },
-  { value: 90, numeral: 'XC' },
-  { value: 50, numeral: 'L' },
-  { value: 40, numeral: 'XL' },
-  { value: 10, numeral: 'X' },
-  { value: 9, numeral: 'IX' },
-  { value: 5, numeral: 'V' },
-  { value: 4, numeral: 'IV' },
-  { value: 1, numeral: 'I' },
-]
-
-/**
- * Convert a number (1–3999) to Roman numeral.
- * @throws Error if num is 0, negative, > 3999, or not an integer
- */
-export function toRoman(num: number): string {
-  if (num === 0) return ''
-  if (num < 0) throw new Error('Roman numerals cannot represent negative numbers')
-  if (num > 3999) throw new Error('Roman numerals cannot represent numbers greater than 3999')
-  if (!Number.isInteger(num)) throw new Error('Roman numerals can only represent integers')
-
-  let result = ''
-  let remaining = num
-
-  for (const { value, numeral } of ROMAN_NUMERALS) {
-    const count = Math.floor(remaining / value)
-    if (count > 0) {
-      result += numeral.repeat(count)
-      remaining -= value * count
-    }
-  }
-
-  return result
+const LATIN_TO_CYRILLIC: Record<string, string> = {
+  'a': 'а', 'b': 'б', 'v': 'в', 'g': 'г', 'd': 'д', 'e': 'е', 'yo': 'ё',
+  'zh': 'ж', 'z': 'з', 'i': 'и', 'y': 'й', 'k': 'к', 'l': 'л', 'm': 'м',
+  'n': 'н', 'o': 'о', 'p': 'п', 'r': 'р', 's': 'с', 't': 'т', 'u': 'у',
+  'f': 'ф', 'h': 'х', 'ts': 'ц', 'ch': 'ч', 'sh': 'ш', 'sch': 'щ',
+  'yu': 'ю', 'ya': 'я',
+  'A': 'А', 'B': 'Б', 'V': 'В', 'G': 'Г', 'D': 'Д', 'E': 'Е', 'Yo': 'Ё',
+  'Zh': 'Ж', 'Z': 'З', 'I': 'И', 'Y': 'Й', 'K': 'К', 'L': 'Л', 'M': 'М',
+  'N': 'Н', 'O': 'О', 'P': 'П', 'R': 'Р', 'S': 'С', 'T': 'Т', 'U': 'У',
+  'F': 'Ф', 'H': 'Х', 'Ts': 'Ц', 'Ch': 'Ч', 'Sh': 'Ш', 'Sch': 'Щ',
+  'Yu': 'Ю', 'Ya': 'Я'
 }
 
 /**
- * Convert a Roman numeral string to number.
- * @throws Error if input is invalid
+ * Convert Cyrillic text to Latin.
  */
-export function fromRoman(romanStr: string): number {
-  if (!romanStr || !romanStr.trim()) return 0
-
-  const cleaned = romanStr.trim().toUpperCase()
-
-  if (!/^[IVXLCDM]+$/.test(cleaned)) {
-    throw new Error('Invalid Roman numeral characters. Only I, V, X, L, C, D, M are allowed.')
-  }
-
-  const invalidPatterns = [
-    /IIII/, /VV/, /XXXX/, /LL/, /CCCC/, /DD/, /MMMM/,
-  ]
-
-  for (const pattern of invalidPatterns) {
-    if (pattern.test(cleaned)) {
-      throw new Error('Invalid Roman numeral pattern detected')
+export function toLatin(cyrillic: string): string {
+  if (!cyrillic || typeof cyrillic !== 'string') return ''
+  let output = ''
+  for (let i = 0; i < cyrillic.length; i++) {
+    if (i < cyrillic.length - 2 && CYRILLIC_TO_LATIN[cyrillic.substring(i, i + 3)]) {
+      output += CYRILLIC_TO_LATIN[cyrillic.substring(i, i + 3)]
+      i += 2
+      continue
     }
-  }
-
-  let result = 0
-  let i = 0
-
-  while (i < cleaned.length) {
-    if (i < cleaned.length - 1) {
-      const twoChar = cleaned.substring(i, i + 2)
-      const twoCharValue = ROMAN_NUMERALS.find((r) => r.numeral === twoChar)
-      if (twoCharValue) {
-        result += twoCharValue.value
-        i += 2
-        continue
-      }
-    }
-
-    const oneChar = cleaned[i]
-    const oneCharValue = ROMAN_NUMERALS.find((r) => r.numeral === oneChar)
-    if (oneCharValue) {
-      result += oneCharValue.value
+    if (i < cyrillic.length - 1 && CYRILLIC_TO_LATIN[cyrillic.substring(i, i + 2)]) {
+      output += CYRILLIC_TO_LATIN[cyrillic.substring(i, i + 2)]
       i += 1
-    } else {
-      throw new Error(`Invalid character: ${oneChar}`)
+      continue
+    }
+    output += CYRILLIC_TO_LATIN[cyrillic[i]] ?? cyrillic[i]
+  }
+  return output
+}
+
+/**
+ * Convert Latin text to Cyrillic.
+ */
+export function toCyrillic(latin: string): string {
+  if (!latin || typeof latin !== 'string') return ''
+  let output = ''
+  let i = 0
+  while (i < latin.length) {
+    let found = false
+    if (i < latin.length - 2 && LATIN_TO_CYRILLIC[latin.substring(i, i + 3)]) {
+      output += LATIN_TO_CYRILLIC[latin.substring(i, i + 3)]
+      i += 3
+      found = true
+    }
+    if (!found && i < latin.length - 1 && LATIN_TO_CYRILLIC[latin.substring(i, i + 2)]) {
+      output += LATIN_TO_CYRILLIC[latin.substring(i, i + 2)]
+      i += 2
+      found = true
+    }
+    if (!found) {
+      output += LATIN_TO_CYRILLIC[latin[i]] ?? latin[i]
+      i++
     }
   }
-
-  const validation = toRoman(result)
-  if (validation !== cleaned) {
-    throw new Error('Invalid Roman numeral format')
-  }
-
-  return result
+  return output
 }
+

@@ -1,28 +1,42 @@
-# roman-numerals
+# cyrillic-latin-transliteration
 
-Convert between numbers and Roman numerals (1–3999). Zero dependencies, TypeScript, ESM.
+Transliterate between Cyrillic and Latin scripts.
 
 ## Install
 
 ```bash
-npm install roman-numerals
+npm install cyrillic-latin-transliteration
 ```
 
 ## Usage
 
 ```ts
-import { toRoman, fromRoman } from 'roman-numerals'
+import { toLatin, toCyrillic } from 'cyrillic-latin-transliteration'
 
-toRoman(42)           // 'XLII'
-toRoman(2024)         // 'MMXXIV'
-fromRoman('IV')       // 4
-fromRoman('MMXXIV')   // 2024
+toLatin('Привет мир')  // 'Privet mir'
+toCyrillic('Privet')   // 'Привет'
 ```
 
 ## API
 
-- **`toRoman(num: number): string`** — Converts a number (1–3999) to a Roman numeral. Throws on invalid input (zero, negative, &gt; 3999, or non-integer).
-- **`fromRoman(romanStr: string): number`** — Converts a Roman numeral string to a number. Case-insensitive; invalid strings throw.
+- **`toLatin(cyrillic: string): string`** — Cyrillic → Latin.
+- **`toCyrillic(latin: string): string`** — Latin → Cyrillic.
+
+## Development
+
+```bash
+npm install
+npm run build
+npm test
+```
+
+## Publishing
+
+```bash
+npm run build
+npm test
+npm publish --access public
+```
 
 ## License
 

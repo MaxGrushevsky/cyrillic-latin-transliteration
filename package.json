@@ -1,7 +1,7 @@
 {
-  "name": "roman-numerals",
+  "name": "cyrillic-latin-transliteration",
   "version": "1.0.0",
-  "description": "Convert between numbers and Roman numerals (1-3999). Zero dependencies.",
+  "description": "Transliterate between Cyrillic and Latin scripts. Zero dependencies.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,23 +17,26 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "test": "vitest",
+    "prepublishOnly": "npm run build && npm test"
   },
   "keywords": [
-    "roman",
-    "numerals",
-    "converter",
-    "number",
-    "roman-numerals"
+    "transliteration",
+    "cyrillic",
+    "latin",
+    "russian",
+    "cyrillic-latin",
+    "latin-cyrillic"
   ],
   "author": "MaxGrushevsky",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MaxGrushevsky/roman-numerals.git"
+    "url": "https://github.com/MaxGrushevsky/cyrillic-latin-transliteration.git"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.0"
   },
   "engines": {
     "node": ">=14"
