@@ -30,14 +30,6 @@ npm run build
 npm test
 ```
 
-## Publishing
-
-```bash
-npm run build
-npm test
-npm publish --access public
-```
-
 ## License
 
 MIT
